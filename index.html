@@ -4,10 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Мій Розклад</title>
+  
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Розклад">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3652/3652191.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3652/3652191.png">
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
   
   <style>
-    /* Глобальні змінні для швидкого налаштування кольорів (Преміальний темний стиль) */
     :root {
       --color-bg-main: #0a0a0c;
       --color-bg-card: #13131a;
@@ -22,7 +30,6 @@
       --border-radius-lg: 16px;
     }
 
-    /* Базові стилі для мобільного екрану */
     body {
       margin: 0;
       padding: 16px;
@@ -33,12 +40,11 @@
     }
 
     .sch {
-      max-width: 500px; /* Ідеально для мобільних та вузьких екранів */
+      max-width: 500px;
       margin: 0 auto;
       padding-bottom: 40px;
     }
 
-    /* Ховаємо заголовок для екранних дикторів, як у тебе в коді */
     .sr-only {
       position: absolute;
       width: 1px;
@@ -50,7 +56,6 @@
       border: 0;
     }
 
-    /* Стильне мобільне перемикання тижнів (виглядає як нативний віджет) */
     .week-toggle {
       display: flex;
       background: var(--color-bg-toggle);
@@ -81,7 +86,6 @@
       border: 0.5px solid rgba(255, 255, 255, 0.05);
     }
 
-    /* Картки днів */
     .day-card {
       background: var(--color-bg-card);
       border: 1px solid var(--color-border);
@@ -91,7 +95,6 @@
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     }
 
-    /* Субота / Неділя (картки відпочинку) */
     .day-card.rest {
       background: var(--color-bg-card-rest);
       opacity: 0.85;
@@ -113,7 +116,6 @@
       margin-right: 4px;
     }
 
-    /* Кольорові бейджі (адаптовані під темну тему для контрасту) */
     .badge {
       font-size: 11px;
       font-weight: 600;
@@ -127,7 +129,6 @@
     .b-rest   { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.3); }
     .b-light  { background: rgba(239, 68, 68, 0.15); color: #ff8383; border: 1px solid rgba(239, 68, 68, 0.3); }
 
-    /* Блоки занять */
     .blocks {
       display: flex;
       flex-direction: column;
@@ -143,15 +144,13 @@
       line-height: 1.4;
     }
 
-    /* Стилізація іконок */
     .block i {
       font-size: 16px;
-      color: #58a6ff; /* Приємний блакитний колір для іконок акценту */
+      color: #58a6ff;
       margin-top: 2px;
       flex-shrink: 0;
     }
     
-    /* Іконки для відпочинку/серіалів робимо спокійнішими */
     .block i.ti-coffee, .block i.ti-heart, .block i.ti-movie, .block i.ti-player-pause {
       color: #ffa2a2;
     }
@@ -168,10 +167,9 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* Нотатки внизу картки */
     .note {
       font-size: 12px;
-      color: #eab308; /* М'який жовтий для приміток/акцентів */
+      color: #eab308;
       background: rgba(234, 179, 8, 0.06);
       padding: 8px 12px;
       border-radius: 8px;
@@ -179,7 +177,6 @@
       border-left: 3px solid #eab308;
     }
 
-    /* Статистика внизу екрану */
     .total-row {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -233,7 +230,7 @@
         <div class="block"><i class="ti ti-walk" aria-hidden="true"></i><span class="t">Обід + прогулянка</span><span class="dur">13:00 — 1 год</span></div>
         <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 1.5 год</span></div>
         <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Відпочинок, їжа</span><span class="dur">19:00 — 1.5 год</span></div>
-        <div class="block"><i class="ti ti-microphone" aria-hidden="true"></i><span class="t">Англійська — speaking або grammar</span><span class="dur">20:30 — 1 год</span></div>
+        <div class="block"><i class="ti ti-microphone" aria-hidden="true"></i><span class="t">Англійська — speaking або grammar</span><span class="dur">20:30 — 1 god</span></div>
       </div>
       <div class="note">Бот: 2 год — це реально. Не більше, мозок здохне.</div>
     </div>
@@ -246,11 +243,11 @@
       </div>
       <div class="blocks">
         <div class="block"><i class="ti ti-book-2" aria-hidden="true"></i><span class="t">Англійська</span><span class="dur">08:00 — 1 год</span></div>
-        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — продовжуєш з понеділка</span><span class="dur">09:00 — 2 год</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — продовжуєш з понеділка</span><span class="dur">09:00 — 2 god</span></div>
         <div class="block"><i class="ti ti-walk" aria-hidden="true"></i><span class="t">Обід + прогулянка</span><span class="dur">13:00 — 1 год</span></div>
-        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 1.5 год</span></div>
+        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 1.5 god</span></div>
         <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Відпочинок</span><span class="dur">19:00 — 1.5 год</span></div>
-        <div class="block"><i class="ti ti-microphone" aria-hidden="true"></i><span class="t">Англійська — speaking або grammar</span><span class="dur">20:30 — 1 год</span></div>
+        <div class="block"><i class="ti ti-microphone" aria-hidden="true"></i><span class="t">Англійська — speaking або grammar</span><span class="dur">20:30 — 1 god</span></div>
       </div>
     </div>
 
@@ -261,8 +258,8 @@
         <span class="badge b-bot">Бот</span>
       </div>
       <div class="blocks">
-        <div class="block"><i class="ti ti-book-2" aria-hidden="true"></i><span class="t">Англійська</span><span class="dur">08:00 — 1 год</span></div>
-        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — 1 год (менше ніж зазвичай)</span><span class="dur">09:00 — 1 год</span></div>
+        <div class="block"><i class="ti ti-book-2" aria-hidden="true"></i><span class="t">Англійська</span><span class="dur">08:00 — 1 god</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — 1 год (менше ніж зазвичай)</span><span class="dur">09:00 — 1 god</span></div>
         <div class="block"><i class="ti ti-player-pause" aria-hidden="true"></i><span class="t">Зал — за бажанням, не обов'язково</span><span class="dur">—</span></div>
         <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Вільний вечір</span><span class="dur">від 17:00</span></div>
       </div>
@@ -276,12 +273,12 @@
         <span class="badge b-bot">Бот</span>
       </div>
       <div class="blocks">
-        <div class="block"><i class="ti ti-book-2" aria-hidden="true"></i><span class="t">Англійська</span><span class="dur">08:00 — 1 год</span></div>
-        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — 2 год</span><span class="dur">09:00 — 2 год</span></div>
-        <div class="block"><i class="ti ti-walk" aria-hidden="true"></i><span class="t">Обід + прогулянка</span><span class="dur">13:00 — 1 год</span></div>
-        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 1.5 год</span></div>
-        <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Відпочинок</span><span class="dur">19:00 — 1.5 год</span></div>
-        <div class="block"><i class="ti ti-microphone" aria-hidden="true"></i><span class="t">Англійська</span><span class="dur">20:30 — 1 год</span></div>
+        <div class="block"><i class="ti ti-book-2" aria-hidden="true"></i><span class="t">Англійська</span><span class="dur">08:00 — 1 god</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — 2 год</span><span class="dur">09:00 — 2 god</span></div>
+        <div class="block"><i class="ti ti-walk" aria-hidden="true"></i><span class="t">Обід + прогулянка</span><span class="dur">13:00 — 1 god</span></div>
+        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 1.5 god</span></div>
+        <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Відпочинок</span><span class="dur">19:00 — 1.5 god</span></div>
+        <div class="block"><i class="ti ti-microphone" aria-hidden="true"></i><span class="t">Англійська</span><span class="dur">20:30 — 1 god</span></div>
       </div>
     </div>
 
@@ -292,9 +289,9 @@
         <span class="badge b-bot">Бот</span>
       </div>
       <div class="blocks">
-        <div class="block"><i class="ti ti-book-2" aria-hidden="true"></i><span class="t">Англійська</span><span class="dur">08:00 — 1 год</span></div>
-        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — тестуєш, фіксуєш баги</span><span class="dur">09:00 — 1.5 год</span></div>
-        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 1.5 год</span></div>
+        <div class="block"><i class="ti ti-book-2" aria-hidden="true"></i><span class="t">Англійська</span><span class="dur">08:00 — 1 god</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — тестуєш, фіксуєш баги</span><span class="dur">09:00 — 1.5 god</span></div>
+        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 1.5 god</span></div>
         <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Вільний вечір — заслужено</span><span class="dur">від 19:00</span></div>
       </div>
       <div class="note">П'ятниця — тест і відпочинок. Не новий код.</div>
@@ -327,7 +324,7 @@
     <div class="total-row">
       <div class="stat"><div class="stat-label">Бот / тиждень</div><div class="stat-val">~9 год</div></div>
       <div class="stat"><div class="stat-label">Англійська</div><div class="stat-val">~6 god</div></div>
-      <div class="stat"><div class="stat-label">Зал / тиждень</div><div class="stat-val">4 × 1.5 год</div></div>
+      <div class="stat"><div class="stat-label">Зал / тиждень</div><div class="stat-val">4 × 1.5 god</div></div>
       <div class="stat"><div class="stat-label">Особисте життя</div><div class="stat-val">є</div></div>
     </div>
   </div>
@@ -389,7 +386,7 @@
       <div class="blocks">
         <div class="block"><i class="ti ti-school" aria-hidden="true"></i><span class="t">Коледж</span><span class="dur">08:30 — 15:05</span></div>
         <div class="block"><i class="ti ti-headphones" aria-hidden="true"></i><span class="t">Англійська по дорозі</span><span class="dur">15:05 — 16:15</span></div>
-        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — 1 год</span><span class="dur">16:15 — 17:30</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — 1 god</span><span class="dur">16:15 — 17:30</span></div>
         <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 19:00</span></div>
         <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Відпочинок</span><span class="dur">19:00 — 20:30</span></div>
         <div class="block"><i class="ti ti-microphone" aria-hidden="true"></i><span class="t">Англійська</span><span class="dur">20:30 — 21:30</span></div>
@@ -435,9 +432,9 @@
     </div>
 
     <div class="total-row">
-      <div class="stat"><div class="stat-label">Бот / тиждень</div><div class="stat-val">~5 год</div></div>
+      <div class="stat"><div class="stat-label">Бот / тиждень</div><div class="stat-val">~5 god</div></div>
       <div class="stat"><div class="stat-label">Англійська</div><div class="stat-val">~5 god</div></div>
-      <div class="stat"><div class="stat-label">Зал / тиждень</div><div class="stat-val">4 × 1.5 год</div></div>
+      <div class="stat"><div class="stat-label">Зал / тиждень</div><div class="stat-val">4 × 1.5 god</div></div>
       <div class="stat"><div class="stat-label">Особисте життя</div><div class="stat-val">є</div></div>
     </div>
   </div>
