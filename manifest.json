@@ -1,0 +1,17 @@
+{
+  "short_name": "Розклад",
+  "name": "Мій Особистий Розклад",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3652/3652191.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/my-time/",
+  "background_color": "#0a0a0c",
+  "theme_color": "#0a0a0c",
+  "display": "standalone",
+  "orientation": "portrait"
+}
