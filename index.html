@@ -47,6 +47,7 @@
       border-radius: var(--border-radius-md);
       margin-bottom: 20px;
       border: 1px solid var(--color-border);
+      gap: 4px;
     }
 
     .wtb {
@@ -55,12 +56,13 @@
       border: none;
       border-radius: 9px;
       padding: 10px 0;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       color: var(--color-text-secondary);
       cursor: pointer;
       transition: all 0.2s ease;
       -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
     }
 
     .wtb.active {
@@ -89,6 +91,12 @@
     .b-fin    { background: rgba(14, 165, 233, 0.15); color: #7dd3fc; border: 1px solid rgba(14, 165, 233, 0.3); }
     .b-rest   { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.3); }
     .b-light  { background: rgba(239, 68, 68, 0.15); color: #ff8383; border: 1px solid rgba(239, 68, 68, 0.3); }
+    
+    /* Ексклюзивні мітки для розділу англійської */
+    .b-eng-g  { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .b-eng-s  { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .b-eng-w  { background: rgba(234, 179, 8, 0.15); color: #fde047; border: 1px solid rgba(234, 179, 8, 0.3); }
+    .b-eng-m  { background: rgba(148, 163, 184, 0.15); color: #e2e8f0; border: 1px solid rgba(148, 163, 184, 0.3); }
 
     .blocks { display: flex; flex-direction: column; gap: 10px; }
     .block { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--color-text-secondary); line-height: 1.4; }
@@ -96,24 +104,32 @@
     .block i { font-size: 16px; color: #58a6ff; margin-top: 2px; flex-shrink: 0; }
     .block i.ti-chart-candle, .block i.ti-trending-up { color: #7dd3fc; }
     .block i.ti-coffee, .block i.ti-heart, .block i.ti-movie { color: #ffa2a2; }
+    .block i.ti-pencil, .block i.ti-edit, .block i.ti-check, .block i.ti-message-circle, .block i.ti-ear, .block i.ti-search, .block i.ti-refresh, .block i.ti-world, .block i.ti-notes, .block i.ti-star { color: #c084fc; }
 
     .block .t { flex: 1; }
     .block .dur { font-size: 12px; color: var(--color-text-tertiary); white-space: nowrap; padding-left: 8px; font-variant-numeric: tabular-nums; }
+    
+    .note { font-size: 12px; color: var(--color-text-tertiary); font-style: italic; margin-top: 10px; border-left: 2px solid var(--color-border); padding-left: 8px; }
 
     .total-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
     .stat { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: 12px; }
     .stat-label { font-size: 11px; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 4px; }
     .stat-val { font-size: 16px; font-weight: 600; color: var(--color-text-primary); }
+
+    .legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; padding: 0 4px; }
+    .leg-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--color-text-secondary); }
+    .leg-dot { width: 8px; height: 8px; border-radius: 50%; }
   </style>
 </head>
 <body>
 
 <div class="sch">
-  <h2 class="sr-only">Тижневий розклад</h2>
+  <h2 class="sr-only">Мій персональний розклад та плани</h2>
 
   <div class="week-toggle">
     <button class="wtb active" onclick="show('dist')">Дистанційний</button>
     <button class="wtb" onclick="show('full')">Очний тиждень</button>
+    <button class="wtb" onclick="show('eng')">Англійська мова</button>
   </div>
 
   <div id="dist">
@@ -122,7 +138,7 @@
       <div class="blocks">
         <div class="block"><i class="ti ti-book-2"></i><span class="t">Англійська (технічний контент)</span><span class="dur">08:00 — 1 год</span></div>
         <div class="block"><i class="ti ti-chart-candle"></i><span class="t">Фінанси / SPIN Selling / продажі</span><span class="dur">09:00 — 1.5 год</span></div>
-        <div class="block"><i class="ti ti-code"></i><span class="t">Бот — розробка (строгий тайм-бокс)</span><span class="dur">11:00 — 1 год</span></div>
+        <div class="block"><i class="ti ti-code"></i><span class="t">Бот — розробка (строгий тайм-бокс)</span><span class="dur">11:00 — 1 god</span></div>
         <div class="block"><i class="ti ti-barbell"></i><span class="t">Зал</span><span class="dur">17:30 — 1.5 год</span></div>
         <div class="block"><i class="ti ti-microphone"></i><span class="t">Англійська — практика</span><span class="dur">20:30 — 1 год</span></div>
       </div>
@@ -201,7 +217,7 @@
         <div class="block"><i class="ti ti-school"></i><span class="t">Коледж</span><span class="dur">08:30 — 15:05</span></div>
         <div class="block"><i class="ti ti-chart-candle"></i><span class="t">Фінанси / SPIN Selling / продажі</span><span class="dur">16:15 — 1.0 год</span></div>
         <div class="block"><i class="ti ti-barbell"></i><span class="t">Зал</span><span class="dur">17:30 — 19:00</span></div>
-        <div class="block"><i class="ti ti-code"></i><span class="t">Бот — кодинг (строго 1 год)</span><span class="dur">20:00 — 1.0 год</span></div>
+        <div class="block"><i class="ti ti-code"></i><span class="t">Бот — кодинг (строго 1 год)</span><span class="dur">20:00 — 1.0 god</span></div>
         <div class="block"><i class="ti ti-microphone"></i><span class="t">Англійська</span><span class="dur">21:00 — 1 год</span></div>
       </div>
     </div>
@@ -212,7 +228,7 @@
         <div class="block"><i class="ti ti-school"></i><span class="t">Коледж</span><span class="dur">08:30 — 15:05</span></div>
         <div class="block"><i class="ti ti-chart-candle"></i><span class="t">Фінанси / SPIN Selling / продажі</span><span class="dur">16:15 — 1.0 год</span></div>
         <div class="block"><i class="ti ti-barbell"></i><span class="t">Зал</span><span class="dur">17:30 — 19:00</span></div>
-        <div class="block"><i class="ti ti-code"></i><span class="t">Бот — розробка модулів</span><span class="dur">20:00 — 1.0 год</span></div>
+        <div class="block"><i class="ti ti-code"></i><span class="t">Бот — розробка модулів</span><span class="dur">20:00 — 1.0 god</span></div>
         <div class="block"><i class="ti ti-microphone"></i><span class="t">Англійська</span><span class="dur">21:00 — 1 год</span></div>
       </div>
     </div>
@@ -232,7 +248,7 @@
         <div class="block"><i class="ti ti-school"></i><span class="t">Коледж</span><span class="dur">08:30 — 15:05</span></div>
         <div class="block"><i class="ti ti-chart-candle"></i><span class="t">Фінанси / SPIN Selling / продажі</span><span class="dur">16:15 — 1.0 год</span></div>
         <div class="block"><i class="ti ti-barbell"></i><span class="t">Зал</span><span class="dur">17:30 — 19:00</span></div>
-        <div class="block"><i class="ti ti-code"></i><span class="t">Бот — закриття поточних тасків</span><span class="dur">20:00 — 1.0 год</span></div>
+        <div class="block"><i class="ti ti-code"></i><span class="t">Бот — закриття поточних тасків</span><span class="dur">20:00 — 1.0 god</span></div>
         <div class="block"><i class="ti ti-microphone"></i><span class="t">Англійська</span><span class="dur">21:00 — 1 год</span></div>
       </div>
     </div>
@@ -263,19 +279,92 @@
     </div>
 
     <div class="total-row">
-      <div class="stat"><div class="stat-label">Продажі / тиждень</div><div class="stat-val">5 год</div></div>
-      <div class="stat"><div class="stat-label">Бот / тиждень</div><div class="stat-val">3 год (max)</div></div>
+      <div class="stat"><div class="stat-label">Продажі / тиждень</div><div class="stat-val">5 god</div></div>
+      <div class="stat"><div class="stat-label">Бот / тиждень</div><div class="stat-val">3 god (max)</div></div>
       <div class="stat"><div class="stat-label">Англійська</div><div class="stat-val">~4.5 год</div></div>
       <div class="stat"><div class="stat-label">Зал</div><div class="stat-val">4 × 1.5 год</div></div>
     </div>
   </div>
+
+  <div id="eng" style="display:none">
+    <div class="legend">
+      <div class="leg-item"><div class="leg-dot" style="background:#c084fc"></div>Граматика</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#4ade80"></div>Speaking</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#fde047"></div>Письмо</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#cbd5e1"></div>Змішане</div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head"><span class="day-name">Понеділок</span><span class="badge b-eng-g">Граматика</span></div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-book-2"></i><span class="t">Вивчи одне граматичне правило (conditionals або perfect tenses)</span><span class="dur">30 хв</span></div>
+        <div class="block"><i class="ti ti-pencil"></i><span class="t">Напиши 10–15 речень із застосуванням правила</span><span class="dur">30 хв</span></div>
+        <div class="block"><i class="ti ti-check"></i><span class="t">Перевір через Grammarly або ChatGPT</span><span class="dur">20 хв</span></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head"><span class="day-name">Вівторок</span><span class="badge b-eng-s">Speaking</span></div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-microphone"></i><span class="t">Shadowing: повторюй вслід за носієм (YouTube, подкаст)</span><span class="dur">20 хв</span></div>
+        <div class="block"><i class="ti ti-message-circle"></i><span class="t">Запиши голосове повідомлення самому собі на будь-яку тему</span><span class="dur">20 хв</span></div>
+        <div class="block"><i class="ti ti-ear"></i><span class="t">Послухай себе, відзнач помилки вимови</span><span class="dur">10 хв</span></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head"><span class="day-name">Середа</span><span class="badge b-eng-w">Письмо</span></div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-edit"></i><span class="t">Напиши короткий текст (150–200 слів): думка, опис або лист</span><span class="dur">35 хв</span></div>
+        <div class="block"><i class="ti ti-search"></i><span class="t">Проаналізуй текст: логіка, зв'язність, різноманіття слів</span><span class="dur">25 хв</span></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head"><span class="day-name">Четвер</span><span class="badge b-eng-g">Граматика</span></div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-refresh"></i><span class="t">Повтори правило з понеділка (вправи на British Council / Perfect English)</span><span class="dur">30 хв</span></div>
+        <div class="block"><i class="ti ti-vocabulary"></i><span class="t">10–15 нових слів через Anki або Quizlet</span><span class="dur">20 хв</span></div>
+        <div class="block"><i class="ti ti-headphones"></i><span class="t">Аудіювання: TED Talk або подкаст (без субтитрів)</span><span class="dur">20 хв</span></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head"><span class="day-name">П'ятниця</span><span class="badge b-eng-s">Speaking</span></div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-world"></i><span class="t">Розмова з носієм або AI (ChatGPT voice, Speeko)</span><span class="dur">30 хв</span></div>
+        <div class="block"><i class="ti ti-notes"></i><span class="t">Запиши 5–10 фраз чи конструкцій, які забув або не міг сказати</span><span class="dur">20 хв</span></div>
+      </div>
+    </div>
+
+    <div class="day-card rest">
+      <div class="day-head"><span class="day-name">Субота</span><span class="badge b-eng-w">Письмо</span></div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-edit"></i><span class="t">Напиши розширений текст або есе (200–250 слів) з граматикою тижня</span><span class="dur">40 хв</span></div>
+        <div class="block"><i class="ti ti-star"></i><span class="t">Переглянь тексти середи та четверга — покращ їх</span><span class="dur">20 хв</span></div>
+      </div>
+    </div>
+
+    <div class="day-card rest">
+      <div class="day-head"><span class="day-name">Неділя</span><span class="badge b-eng-m">Відпочинок</span></div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-movie"></i><span class="t">Серіал або фільм англійською (тільки з англійськими субтитрами чи без них)</span><span class="dur">—</span></div>
+      </div>
+      <div class="note">Пасивне занурення — теж навчання. Не змушуй себе "вчити".</div>
+    </div>
+  </div>
+
 </div>
 
 <script>
 function show(w) {
   document.getElementById('dist').style.display = w === 'dist' ? 'block' : 'none';
   document.getElementById('full').style.display = w === 'full' ? 'block' : 'none';
-  document.querySelectorAll('.wtb').forEach(b => b.classList.toggle('active', b.getAttribute('onclick').includes(w)));
+  document.getElementById('eng').style.display = w === 'eng' ? 'block' : 'none';
+  
+  document.querySelectorAll('.wtb').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('onclick').includes(w));
+  });
 }
 </script>
 
