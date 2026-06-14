@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>IELTS Schedule</title>
+  <title>Мій Розклад</title>
   
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Розклад">
+  <meta name="mobile-web-app-capable" content="yes">
+  
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3652/3652191.png">
   <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3652/3652191.png">
 
@@ -17,6 +20,7 @@
       --color-bg-main: #0a0a0c;
       --color-bg-card: #13131a;
       --color-bg-card-rest: #0e0e12;
+      --color-bg-toggle: #181822;
       --color-border: #222230;
       --color-text-primary: #f1f1f6;
       --color-text-secondary: #a1a1b5;
@@ -41,11 +45,45 @@
       padding-bottom: 40px;
     }
 
-    h2 {
-      font-size: 20px;
-      text-align: center;
-      margin-bottom: 24px;
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    .week-toggle {
+      display: flex;
+      background: var(--color-bg-toggle);
+      padding: 4px;
+      border-radius: var(--border-radius-md);
+      margin-bottom: 20px;
+      border: 1px solid var(--color-border);
+    }
+
+    .wtb {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-radius: 9px;
+      padding: 10px 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .wtb.active {
+      background: var(--color-bg-card);
       color: var(--color-text-primary);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      border: 0.5px solid rgba(255, 255, 255, 0.05);
     }
 
     .day-card {
@@ -85,14 +123,11 @@
       border-radius: 20px;
       letter-spacing: 0.3px;
     }
-    
-    .b-gram  { background: rgba(110, 96, 245, 0.15); color: #9d94ff; border: 1px solid rgba(110, 96, 245, 0.3); }
-    .b-read  { background: rgba(16, 185, 129, 0.15); color: #52ecb6; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .b-list  { background: rgba(245, 158, 11, 0.15); color: #ffc46b; border: 1px solid rgba(245, 158, 11, 0.3); }
-    .b-writ  { background: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
-    .b-speak { background: rgba(56, 189, 248, 0.15); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.3); }
-    .b-ielts { background: rgba(239, 68, 68, 0.15); color: #ff8383; border: 1px solid rgba(239, 68, 68, 0.3); }
-    .b-chill { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.3); }
+    .b-gym    { background: rgba(110, 96, 245, 0.15); color: #9d94ff; border: 1px solid rgba(110, 96, 245, 0.3); }
+    .b-bot    { background: rgba(16, 185, 129, 0.15); color: #52ecb6; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .b-eng    { background: rgba(245, 158, 11, 0.15); color: #ffc46b; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .b-rest   { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.3); }
+    .b-light  { background: rgba(239, 68, 68, 0.15); color: #ff8383; border: 1px solid rgba(239, 68, 68, 0.3); }
 
     .blocks {
       display: flex;
@@ -116,7 +151,7 @@
       flex-shrink: 0;
     }
     
-    .block i.ti-movie {
+    .block i.ti-coffee, .block i.ti-heart, .block i.ti-movie, .block i.ti-player-pause {
       color: #ffa2a2;
     }
 
@@ -175,93 +210,242 @@
 <body>
 
 <div class="sch">
-  <h2>English: Мінімум 1 год / день</h2>
+  <h2 class="sr-only">Тижневий розклад: дистанційний і очний тиждень</h2>
 
-  <div class="day-card">
-    <div class="day-head">
-      <span class="day-name">Понеділок</span>
-      <span class="badge b-gram">Grammar</span>
-      <span class="badge b-read">Reading</span>
+  <div class="week-toggle">
+    <button class="wtb active" onclick="show('dist')">Дистанційний</button>
+    <button class="wtb" onclick="show('full')">Очний тиждень</button>
+  </div>
+
+  <div id="dist">
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">Понеділок</span>
+        <span class="badge b-gym">Зал</span>
+        <span class="badge b-bot">Бот</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-book-2" aria-hidden="true"></i><span class="t">Англійська: 30 хв граматика (артиклі), 30 хв читання</span><span class="dur">08:00 — 1 год</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — головний блок (пишеш код)</span><span class="dur">09:00 — 2 год</span></div>
+        <div class="block"><i class="ti ti-walk" aria-hidden="true"></i><span class="t">Обід + прогулянка</span><span class="dur">13:00 — 1 год</span></div>
+        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 1.5 год</span></div>
+        <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Відпочинок, їжа, вільний вечір</span><span class="dur">19:00 — кін. дня</span></div>
+      </div>
+      <div class="note">Бот: 2 год — це реально. Не більше, мозок здохне.</div>
     </div>
-    <div class="blocks">
-      <div class="block"><i class="ti ti-language" aria-hidden="true"></i><span class="t">Граматика (артиклі зараз)</span><span class="dur">30 хв</span></div>
-      <div class="block"><i class="ti ti-book-2" aria-hidden="true"></i><span class="t">Читання</span><span class="dur">30 хв</span></div>
+
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">Вівторок</span>
+        <span class="badge b-gym">Зал</span>
+        <span class="badge b-bot">Бот</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-headphones" aria-hidden="true"></i><span class="t">Англійська: 30 хв відео/подкаст, 30 хв слова + речення</span><span class="dur">08:00 — 1 год</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — продовжуєш з понеділка</span><span class="dur">09:00 — 2 год</span></div>
+        <div class="block"><i class="ti ti-walk" aria-hidden="true"></i><span class="t">Обід + прогулянка</span><span class="dur">13:00 — 1 год</span></div>
+        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 1.5 год</span></div>
+        <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Відпочинок, вільний вечір</span><span class="dur">19:00 — кін. дня</span></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">Середа</span>
+        <span class="badge b-light">Лайт день</span>
+        <span class="badge b-bot">Бот</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-pencil" aria-hidden="true"></i><span class="t">Англійська: 30 хв граматика, 30 хв writing (MovePL/Вроцлав/бізнес)</span><span class="dur">08:00 — 1 год</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — 1 год (менше ніж зазвичай)</span><span class="dur">09:00 — 1 год</span></div>
+        <div class="block"><i class="ti ti-player-pause" aria-hidden="true"></i><span class="t">Зал — за бажанням, не обов'язково</span><span class="dur">—</span></div>
+        <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Вільний вечір</span><span class="dur">від 17:00</span></div>
+      </div>
+      <div class="note">Середа — ти відновлюєшся. Бот на 1 год, не більше.</div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">Четвер</span>
+        <span class="badge b-gym">Зал</span>
+        <span class="badge b-bot">Бот</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-microphone" aria-hidden="true"></i><span class="t">Англійська: 30 хв читання, 30 хв speaking вголос (самому)</span><span class="dur">08:00 — 1 год</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — 2 год</span><span class="dur">09:00 — 2 год</span></div>
+        <div class="block"><i class="ti ti-walk" aria-hidden="true"></i><span class="t">Обід + прогулянка</span><span class="dur">13:00 — 1 год</span></div>
+        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 1.5 год</span></div>
+        <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Відпочинок, вільний вечір</span><span class="dur">19:00 — кін. дня</span></div>
+      </div>
+      <div class="note">IELTS Speaking — це навичка, а не знання. Говорити обов'язково.</div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">П'ятниця</span>
+        <span class="badge b-gym">Зал</span>
+        <span class="badge b-bot">Бот</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-list-check" aria-hidden="true"></i><span class="t">Англійська: артиклі, прийменники, часи, фразові дієслова</span><span class="dur">08:00 — 1 год</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — тестуєш, фіксуєш баги</span><span class="dur">09:00 — 1.5 год</span></div>
+        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 1.5 год</span></div>
+        <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Вільний вечір — заслужено</span><span class="dur">від 19:00</span></div>
+      </div>
+      <div class="note">П'ятниця — тест і відпочинок. Не новий код.</div>
+    </div>
+
+    <div class="day-card rest">
+      <div class="day-head">
+        <span class="day-name">Субота</span>
+        <span class="badge b-rest">Мінімум</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — якщо є натхнення, 1 год максимум</span><span class="dur">—</span></div>
+        <div class="block"><i class="ti ti-certificate" aria-hidden="true"></i><span class="t">IELTS Day: Reading або Listening у форматі екзамену</span><span class="dur">60+ хв</span></div>
+        <div class="block"><i class="ti ti-heart" aria-hidden="true"></i><span class="t">Особисте життя. Повністю.</span><span class="dur">решта дня</span></div>
+      </div>
+    </div>
+
+    <div class="day-card rest">
+      <div class="day-head">
+        <span class="day-name">Неділя</span>
+        <span class="badge b-rest">Відпочинок</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-movie" aria-hidden="true"></i><span class="t">Легка англ без зубріння: книга, серіал, The Boys, YouTube</span><span class="dur">—</span></div>
+        <div class="block"><i class="ti ti-heart" aria-hidden="true"></i><span class="t">Нічого обов'язкового</span><span class="dur">—</span></div>
+      </div>
+      <div class="note">Просто щоб не перегоріти. Неділя без ноута = кращий понеділок.</div>
+    </div>
+
+    <div class="total-row">
+      <div class="stat"><div class="stat-label">Бот / тиждень</div><div class="stat-val">~9 год</div></div>
+      <div class="stat"><div class="stat-label">Англійська</div><div class="stat-val">~7 год</div></div>
+      <div class="stat"><div class="stat-label">Зал / тиждень</div><div class="stat-val">4 × 1.5 год</div></div>
+      <div class="stat"><div class="stat-label">Особисте життя</div><div class="stat-val">є</div></div>
     </div>
   </div>
 
-  <div class="day-card">
-    <div class="day-head">
-      <span class="day-name">Вівторок</span>
-      <span class="badge b-list">Listening</span>
-      <span class="badge b-gram">Vocabulary</span>
+  <div id="full" style="display:none">
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">Понеділок</span>
+        <span class="badge b-gym">Зал</span>
+        <span class="badge b-bot">Бот</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-school" aria-hidden="true"></i><span class="t">Коледж</span><span class="dur">08:30 — 15:05</span></div>
+        <div class="block"><i class="ti ti-headphones" aria-hidden="true"></i><span class="t">Англійська — подкаст по дорозі</span><span class="dur">15:05 — 16:15</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — 1 год (поки є енергія)</span><span class="dur">16:15 — 17:30</span></div>
+        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 19:00</span></div>
+        <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Відпочинок, їжа</span><span class="dur">19:00 — 20:30</span></div>
+        <div class="block"><i class="ti ti-book-2" aria-hidden="true"></i><span class="t">Англійська: 30 хв граматика (артиклі), 30 хв читання</span><span class="dur">20:30 — 21:30</span></div>
+      </div>
+      <div class="note">Очний день важчий — бот тільки 1 год, без докорів.</div>
     </div>
-    <div class="blocks">
-      <div class="block"><i class="ti ti-headphones" aria-hidden="true"></i><span class="t">Відео/подкаст англійською</span><span class="dur">30 хв</span></div>
-      <div class="block"><i class="ti ti-book" aria-hidden="true"></i><span class="t">Нові слова + свої речення</span><span class="dur">30 хв</span></div>
-    </div>
-  </div>
 
-  <div class="day-card">
-    <div class="day-head">
-      <span class="day-name">Середа</span>
-      <span class="badge b-writ">Writing</span>
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">Вівторок</span>
+        <span class="badge b-gym">Зал</span>
+        <span class="badge b-bot">Бот</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-school" aria-hidden="true"></i><span class="t">Коледж</span><span class="dur">08:30 — 15:05</span></div>
+        <div class="block"><i class="ti ti-headphones" aria-hidden="true"></i><span class="t">Англійська — подкаст по дорозі</span><span class="dur">15:05 — 16:15</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — 1 год</span><span class="dur">16:15 — 17:30</span></div>
+        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 19:00</span></div>
+        <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Відпочинок</span><span class="dur">19:00 — 20:30</span></div>
+        <div class="block"><i class="ti ti-book" aria-hidden="true"></i><span class="t">Англійська: 30 хв відео/подкаст, 30 хв нові слова</span><span class="dur">20:30 — 21:30</span></div>
+      </div>
     </div>
-    <div class="blocks">
-      <div class="block"><i class="ti ti-language" aria-hidden="true"></i><span class="t">Граматика</span><span class="dur">30 хв</span></div>
-      <div class="block"><i class="ti ti-pencil" aria-hidden="true"></i><span class="t">Написати 150–250 слів (думки про MovePL, чому хочеш у Вроцлав, що думаєш про підприємництво)</span><span class="dur">30 хв</span></div>
-    </div>
-  </div>
 
-  <div class="day-card">
-    <div class="day-head">
-      <span class="day-name">Четвер</span>
-      <span class="badge b-read">Reading</span>
-      <span class="badge b-speak">Speaking</span>
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">Середа</span>
+        <span class="badge b-light">Лайт день</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-school" aria-hidden="true"></i><span class="t">Коледж</span><span class="dur">08:30 — 15:05</span></div>
+        <div class="block"><i class="ti ti-pencil" aria-hidden="true"></i><span class="t">Англійська: 30 хв граматика, 30 хв writing (вдома/в дорозі)</span><span class="dur">15:05 — 16:15</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — 45 хв максимум, або взагалі ні</span><span class="dur">16:15 — 17:00</span></div>
+        <div class="block"><i class="ti ti-heart" aria-hidden="true"></i><span class="t">Вільний вечір повністю</span><span class="dur">від 17:00</span></div>
+      </div>
+      <div class="note">Середа очного — найважчий день. Не тисни на себе.</div>
     </div>
-    <div class="blocks">
-      <div class="block"><i class="ti ti-book-2" aria-hidden="true"></i><span class="t">Читання</span><span class="dur">30 хв</span></div>
-      <div class="block"><i class="ti ti-microphone" aria-hidden="true"></i><span class="t">Говорити вголос англійською. Так, самому.</span><span class="dur">30 хв</span></div>
-    </div>
-    <div class="note">IELTS Speaking — це навичка, а не знання.</div>
-  </div>
 
-  <div class="day-card">
-    <div class="day-head">
-      <span class="day-name">П'ятниця</span>
-      <span class="badge b-gram">Grammar</span>
-      <span class="badge b-gram">Vocabulary</span>
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">Четвер</span>
+        <span class="badge b-gym">Зал</span>
+        <span class="badge b-bot">Бот</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-school" aria-hidden="true"></i><span class="t">Коледж</span><span class="dur">08:30 — 15:05</span></div>
+        <div class="block"><i class="ti ti-headphones" aria-hidden="true"></i><span class="t">Англійська по дорозі</span><span class="dur">15:05 — 16:15</span></div>
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — 1 год</span><span class="dur">16:15 — 17:30</span></div>
+        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 19:00</span></div>
+        <div class="block"><i class="ti ti-coffee" aria-hidden="true"></i><span class="t">Відпочинок</span><span class="dur">19:00 — 20:30</span></div>
+        <div class="block"><i class="ti ti-microphone" aria-hidden="true"></i><span class="t">Англійська: 30 хв читання, 30 хв speaking (самому)</span><span class="dur">20:30 — 21:30</span></div>
+      </div>
+      <div class="note">IELTS Speaking — це навичка, а не знання.</div>
     </div>
-    <div class="blocks">
-      <div class="block"><i class="ti ti-list-check" aria-hidden="true"></i><span class="t">Артиклі, прийменники, часи, фразові дієслова</span><span class="dur">60 хв</span></div>
-    </div>
-  </div>
 
-  <div class="day-card">
-    <div class="day-head">
-      <span class="day-name">Субота</span>
-      <span class="badge b-ielts">IELTS Day</span>
+    <div class="day-card">
+      <div class="day-head">
+        <span class="day-name">П'ятниця</span>
+        <span class="badge b-gym">Зал</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-school" aria-hidden="true"></i><span class="t">Коледж</span><span class="dur">08:30 — 15:05</span></div>
+        <div class="block"><i class="ti ti-list-check" aria-hidden="true"></i><span class="t">Англійська (по дорозі/вдома): артиклі, прийменники, часи, фразові</span><span class="dur">15:05 — 16:15</span></div>
+        <div class="block"><i class="ti ti-barbell" aria-hidden="true"></i><span class="t">Зал</span><span class="dur">17:30 — 19:00</span></div>
+        <div class="block"><i class="ti ti-heart" aria-hidden="true"></i><span class="t">Вечір вільний — без бота</span><span class="dur">від 19:00</span></div>
+      </div>
+      <div class="note">П'ятниця очного — бот не обов'язковий. Ти вже зробив достатньо.</div>
     </div>
-    <div class="blocks">
-      <div class="block"><i class="ti ti-certificate" aria-hidden="true"></i><span class="t">Reading section або Listening section у форматі екзамену</span><span class="dur">60+ хв</span></div>
-    </div>
-  </div>
 
-  <div class="day-card rest">
-    <div class="day-head">
-      <span class="day-name">Неділя</span>
-      <span class="badge b-chill">Легка англійська</span>
+    <div class="day-card rest">
+      <div class="day-head">
+        <span class="day-name">Субота</span>
+        <span class="badge b-bot">Бот</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-code" aria-hidden="true"></i><span class="t">Бот — головна сесія тижня, 2 год</span><span class="dur">ранок / день</span></div>
+        <div class="block"><i class="ti ti-certificate" aria-hidden="true"></i><span class="t">IELTS Day: Reading або Listening у форматі екзамену</span><span class="dur">60+ хв</span></div>
+        <div class="block"><i class="ti ti-heart" aria-hidden="true"></i><span class="t">Особисте життя</span><span class="dur">решта дня</span></div>
+      </div>
+      <div class="note">Субота — компенсує менші сесії очного тижня.</div>
     </div>
-    <div class="blocks">
-      <div class="block"><i class="ti ti-movie" aria-hidden="true"></i><span class="t">Без зубріння: книга, серіал, The Boys, YouTube</span><span class="dur">—</span></div>
-    </div>
-    <div class="note">Просто щоб не перегоріти.</div>
-  </div>
 
-  <div class="total-row">
-    <div class="stat"><div class="stat-label">Час / тиждень</div><div class="stat-val">~7 год</div></div>
-    <div class="stat"><div class="stat-label">Фокус</div><div class="stat-val">IELTS</div></div>
+    <div class="day-card rest">
+      <div class="day-head">
+        <span class="day-name">Неділя</span>
+        <span class="badge b-rest">Відпочинок</span>
+      </div>
+      <div class="blocks">
+        <div class="block"><i class="ti ti-movie" aria-hidden="true"></i><span class="t">Легка англ без зубріння: книга, серіал, The Boys, YouTube</span><span class="dur">—</span></div>
+        <div class="block"><i class="ti ti-heart" aria-hidden="true"></i><span class="t">Нічого обов'язкового</span><span class="dur">—</span></div>
+      </div>
+    </div>
+
+    <div class="total-row">
+      <div class="stat"><div class="stat-label">Бот / тиждень</div><div class="stat-val">~5 год</div></div>
+      <div class="stat"><div class="stat-label">Англійська</div><div class="stat-val">~7 год</div></div>
+      <div class="stat"><div class="stat-label">Зал / тиждень</div><div class="stat-val">4 × 1.5 год</div></div>
+      <div class="stat"><div class="stat-label">Особисте життя</div><div class="stat-val">є</div></div>
+    </div>
   </div>
 </div>
+
+<script>
+function show(w) {
+  document.getElementById('dist').style.display = w === 'dist' ? 'block' : 'none';
+  document.getElementById('full').style.display = w === 'full' ? 'block' : 'none';
+  document.querySelectorAll('.wtb').forEach(b => b.classList.toggle('active', b.getAttribute('onclick').includes(w)));
+}
+</script>
 
 </body>
 </html>
